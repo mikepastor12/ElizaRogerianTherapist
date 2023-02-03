@@ -41,13 +41,13 @@ def parseCommand():
     with sr.Microphone() as source:
 
         listener.pause_threshold = 2
-        print('LISTEN...')
+        print('How can I help you? ')
         input_speech = listener.listen(source )
         # , timeout=10.0
 
         try:
             print('Recognizing speech...')
-            query = listener.recognize_google( input_speech, language='en_gb' )
+            query = listener.recognize_google( input_speech, language='en_us' )
             print('Google interprets as - ', query )
         except Exception as exception:
             print('Sorry - didn''t catch that' )
