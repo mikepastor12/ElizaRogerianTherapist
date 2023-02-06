@@ -10,12 +10,12 @@
 #       Michael Pastor - January 31, 2023
 
 from Robot import Robot
-import SoundHeader as sh   # Our voice commands
+from SoundObject import SoundObject    # Our voice commands
 
+import numpy as np
 import random
 import json
 import pickle
-import numpy as np
 
 import nltk
 from nltk.stem import WordNetLemmatizer

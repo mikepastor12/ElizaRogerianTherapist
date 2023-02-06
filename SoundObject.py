@@ -39,7 +39,7 @@ class SoundObject():
     voices = engine.getProperty('voices')
 
     #  0 - male voice 1 = female
-    engine.setProperty('voice', voices[0].id )
+    engine.setProperty('voice', voices[1].id )
 
     activationWord = 'computer'
 

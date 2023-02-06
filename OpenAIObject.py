@@ -3,13 +3,17 @@
 #
 #      Provide a Robot interface to the Open AI - ChatGPT model
 #
+#           https://platform.openai.com/account/api-keys
+#
 #      Mike Pastor 2/3/2023
 
 import openai
 
 class OpenAIObject():
 
-    openai.api_key = "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"
+
+    #  openai.api_key = "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"
+    openai.api_key = "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"
 
     model_engine = "text-davinci-003"
     prompt = "Hello, how are you today?"
