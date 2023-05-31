@@ -28,7 +28,8 @@ class Robot( object ):
         atexit.register(self.stop_system)
         print("############ Robot Initialized ##########")
 
-    SK = "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"
+    # SK = "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"
+    SK = "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"
 
     # Stop all features
     #
