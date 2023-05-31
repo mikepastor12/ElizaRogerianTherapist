@@ -12,17 +12,16 @@
 #       Mike Pastor 2/3/2023
 
 import openai
-openai.api_key = \
-    "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"
 
 import speech_recognition as sr
-import pyttsx3
 
 from Eliza import Eliza
 from SoundObject import SoundObject  # Our voice commands
 from OpenAIObject import OpenAIObject  # Our Open AI  commands
+openai.api_key = Eliza.SK
 
-#   How does Rogerian therapy work?
+
+#     How does Rogerian therapy work?
 # This form of psychotherapy is grounded in the idea that people
 # are inherently motivated toward achieving positive psychological functioning.
 # The client is believed to be the expert in their life and
@@ -51,12 +50,15 @@ def printSpeak( str ):
 
 ##################################################################################
 def submitMessages(messages, model="gpt-3.5-turbo", temperature=0):
+
+    #  print('messages:  ', messages)
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
         temperature=temperature, # this is the degree of randomness of the model's output
     )
-#     print(str(response.choices[0].message))
+
+#   print(str(response.choices[0].message))
     return response.choices[0].message["content"]
 
 #    Setup the hardware microphone and have Google transcribe it.
@@ -74,7 +76,7 @@ def parseVoiceCommand():
 
     with sr.Microphone() as source:
 
-        listener.pause_threshold = 2
+        listener.pause_threshold = 1
         listener.adjust_for_ambient_noise(source)
 
         try:

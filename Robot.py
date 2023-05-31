@@ -17,6 +17,8 @@ class Robot( object ):
     #
     state = 0
 
+
+
     # Initialize the Base Robot
     #
     def __init__(self):
@@ -26,6 +28,7 @@ class Robot( object ):
         atexit.register(self.stop_system)
         print("############ Robot Initialized ##########")
 
+    SK = "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"
 
     # Stop all features
     #

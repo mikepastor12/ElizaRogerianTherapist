@@ -19,12 +19,10 @@ import random
 
 class Eliza( Robot ):
 
-
     print("############ Eliza - Sub Robot Initialized ##########")
 
-
+    # SK = Robot.SK
     def get_response(  self, intents_list, intents_json ):
-
 
         return
 
