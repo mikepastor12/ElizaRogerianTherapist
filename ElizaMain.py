@@ -1,4 +1,4 @@
-#######################################################
+############################################################################
 #    ElizaMain.py
 #
 #    The next generation of the classic Eliza Rogerian
@@ -6,13 +6,14 @@
 #       and uses ChatGPT as the brains for the dialog.
 #
 #       Setup Notes:
-#           pip install speechrecognition
-#           pip install pyttsx3
+#           pip install openai
+#           pip install speech_recognition
+#           pip install pyttsx3, pyaudio
 #
-#       Mike Pastor 2/3/2023
+#       Mike Pastor 6/2/2023
+import time
 
 import openai
-
 import speech_recognition as sr
 
 from Eliza import Eliza
@@ -20,18 +21,10 @@ from SoundObject import SoundObject  # Our voice commands
 from OpenAIObject import OpenAIObject  # Our Open AI  commands
 openai.api_key = Eliza.SK
 
-
-#     How does Rogerian therapy work?
-# This form of psychotherapy is grounded in the idea that people
-# are inherently motivated toward achieving positive psychological functioning.
-# The client is believed to be the expert in their life and
-# leads the general direction of therapy, while the therapist takes
-# a non-directive rather than a mechanistic approach.
+#   Here is the 'context' where we
+#    accumulate messages from the conversation
 #
-
-# Here is the 'context' where we accumulate messages
-#
-context = [ {'role':'system', 'content':""" \
+situationContext = [ {'role':'system', 'content':""" \
 You are Eliza, an automated mental health therapy service. \
 You are speaking to a client. \
 You first introduce yourself and greet the client. \
@@ -55,7 +48,8 @@ def submitMessages(messages, model="gpt-3.5-turbo", temperature=0):
     response = openai.ChatCompletion.create(
         model=model,
         messages=messages,
-        temperature=temperature, # this is the degree of randomness of the model's output
+        temperature=temperature
+        # this is the degree of randomness of the model's output
     )
 
 #   print(str(response.choices[0].message))
@@ -72,7 +66,7 @@ def parseVoiceCommand():
 
     listener.dynamic_energy_threshold = False
 
-    # print('Just a moment please...')
+    print('Just a moment please...')
 
     with sr.Microphone() as source:
 
@@ -81,7 +75,8 @@ def parseVoiceCommand():
 
         try:
             printSpeak('Please tell me more...')
-            input_speech = listener.listen(source, timeout=10.0)
+            input_speech = listener.listen(source, timeout=60.0)
+            # input_speech = listener.listen(source)
 
             print('Transcribing speech...')
             query = listener.recognize_google( input_speech, language='en_us' )
@@ -111,9 +106,9 @@ print('#############  Eliza Rogerian Therapist is running! ################')
 # Get the first response from the LLM
 #
 prompt="hello"
-context.append({'role': 'user', 'content': f"{prompt}"})
-response = submitMessages(context)
-context.append({'role': 'assistant', 'content': f"{response}"})
+situationContext.append({'role': 'user', 'content': f"{prompt}"})
+response = submitMessages(situationContext)
+situationContext.append({'role': 'assistant', 'content': f"{response}"})
 printSpeak(response)
 
 
@@ -127,6 +122,8 @@ while (True):
     #  Use voice input with Google transcription
     #
     prompt = parseVoiceCommand()
+
+    # Take care of Admin commands here
     if prompt.lower() == "goodbye" or prompt.lower() == "bye":
         printSpeak("Goodbye and be well")
         break;
@@ -134,11 +131,17 @@ while (True):
     if prompt.lower() == "none":
         continue;
 
-    #  Add the new question to the context and submit
-    context.append({'role': 'user', 'content': f"{prompt}"})
-    response = submitMessages(context)
+    if prompt.lower() == "please wait" or prompt.lower() == "pause":
+        printSpeak('Waiting...')
+        time.sleep( 300 ) # 5 minutes
+        printSpeak("Shall we continue our session?")
+        break;
+
+    #  Add the new question to the situationContext and submit
+    situationContext.append({'role': 'user', 'content': f"{prompt}"})
+    response = submitMessages(situationContext)
     #  Add the response to the context and print/speak it
-    context.append({'role': 'assistant', 'content': f"{response}"})
+    situationContext.append({'role': 'assistant', 'content': f"{response}"})
     printSpeak(response)
 
 
