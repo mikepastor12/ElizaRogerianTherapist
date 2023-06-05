@@ -1,4 +1,4 @@
-############################################################################
+##############################################################################
 #    ElizaMain.py
 #
 #    The next generation of the classic Eliza Rogerian
@@ -17,10 +17,11 @@ import openai
 import speech_recognition as sr
 
 from Eliza import Eliza
-from SoundObject import SoundObject  # Our voice commands
-from OpenAIObject import OpenAIObject  # Our Open AI  commands
-openai.api_key = Eliza.SK
+# from SoundObject import SoundObject  # Our voice commands
+# from OpenAIObject import OpenAIObject  # Our Open AI  commands
+# openai.api_key = Eliza.SK
 
+################################################################################
 #   Here is the 'context' where we
 #    accumulate messages from the conversation
 #
@@ -37,13 +38,15 @@ Then try to develop coping methods and strategies for  helping the problems. \
 """} ]
 
 
-def printSpeak( str ):
+#  Print and speak the string
+def printSpeak( str, rate=160 ):
     print(str)
-    so.speak(str)
+    eliza.so.speak(str, rate)
 
-##################################################################################
+#####################################################################
+#  Submit the message list to OpenAI
+#
 def submitMessages(messages, model="gpt-3.5-turbo", temperature=0):
-
     #  print('messages:  ', messages)
     response = openai.ChatCompletion.create(
         model=model,
@@ -52,8 +55,9 @@ def submitMessages(messages, model="gpt-3.5-turbo", temperature=0):
         # this is the degree of randomness of the model's output
     )
 
-#   print(str(response.choices[0].message))
+    #   print(str(response.choices[0].message))
     return response.choices[0].message["content"]
+
 
 #    Setup the hardware microphone and have Google transcribe it.
 #
@@ -66,7 +70,7 @@ def parseVoiceCommand():
 
     listener.dynamic_energy_threshold = False
 
-    print('Just a moment please...')
+    print('...')
 
     with sr.Microphone() as source:
 
@@ -90,17 +94,12 @@ def parseVoiceCommand():
         return query
 
 
-######################################################
+#######################################################################
 # Our robot and its components are instantiated here
 #
 eliza = Eliza()
 
-ai = OpenAIObject()
-
-so = SoundObject()
-
-###############################################
-print('#############  Eliza Rogerian Therapist is running! ################')
+print('###############  Eliza Rogerian Therapist is ready ###################')
 
 
 # Get the first response from the LLM
@@ -111,12 +110,13 @@ response = submitMessages(situationContext)
 situationContext.append({'role': 'assistant', 'content': f"{response}"})
 printSpeak(response)
 
-
 # printSpeak('Talk to me Boobala ')
 
+#  Loop thru the voice commands as they are received
+#
 while (True):
 
-    #  Use keyboard input
+    #  Use keyboard input like this
     #  prompt = input("Tell me more... ")
 
     #  Use voice input with Google transcription
@@ -128,12 +128,14 @@ while (True):
         printSpeak("Goodbye and be well")
         break;
 
-    if prompt.lower() == "none":
+    if prompt.lower() == "None":
         continue;
 
-    if prompt.lower() == "please wait" or prompt.lower() == "pause":
+    if prompt.lower() == "please wait" or \
+            prompt.lower() == "Eliza please wait" or \
+            prompt.lower() == "pause":
         printSpeak('Waiting...')
-        time.sleep( 300 ) # 5 minutes
+        time.sleep( 600 ) # 10 minutes
         printSpeak("Shall we continue our session?")
         break;
 

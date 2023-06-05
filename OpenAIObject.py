@@ -3,33 +3,37 @@
 #
 #      Provide a Robot interface to the Open AI - ChatGPT model
 #
+#       You Need a valid OpenAI key here -  See this site
 #           https://platform.openai.com/account/api-keys
 #
-#      Mike Pastor 2/3/2023
+#      Mike Pastor 6/5/2023
 
 import openai
-
+import json
 
 class OpenAIObject():
 
-    #
-    # #  openai.api_key = "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"
-    # openai.api_key = "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"
+    ###########################################################################
+    #   You Need a valid OpenAI key here -
+    #      https://platform.openai.com/account/api-keys
     #
     # openai.api_key = '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'
-    openai.api_key = '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'
-    model_engine = "text-davinci-003"
-    # prompt = "Hello, how are you today?"
 
+
+    #  Which LLM to use
+    model_engine = "gpt-3.5-turbo"
 
     # Initialize the Open AI object
     #
     def __init__(self):
 
-        print("############ OPENAI Initialized ##########")
+        print("############ Eliza OpenAIObject Initialized ##########")
 
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True, indent=4)
 
-    def do_completion( self, sentence ):
+    def doCompletion( self, sentence ):
 
         completion = openai.Completion.create(
             engine = self.model_engine,
@@ -45,7 +49,7 @@ class OpenAIObject():
 
 #
 # ai = OpenAIObject()
-# response = ai.do_completion( 'hello brave new world')
+# response = ai.submitMessages( 'hello brave new world')
 # print( response )
 # ai = OpenAIObject()
 # response = ai.do_completion( 'hello brave new world')

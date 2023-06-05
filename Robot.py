@@ -1,23 +1,24 @@
-#######################################################
+########################################################################
 #   Robot.py
 #
-#       Root class of our Robot programs.
-#           Specific Robots (e.g. Eliza) subclass Robot
+#       Eliza Rogerian Therapist – ChatGPT Version
+#
+#       Root class of all our Robot programs.
+#           Specific Robots (e.g. Eliza, PennwickRover) subclass Robot
 #               and add features.
 #
-#       Mike Pastor - 2/3/2023
+#       Mike Pastor - 6/5/2023
 
-
-# Our Libraries
-from time import sleep
 import atexit
 
+
+#   A Robot is an entity
+#       All Robots should shutdown cleanly on exit.
+#
 class Robot( object ):
     #  Member variables
     #
     state = 0
-
-
 
     # Initialize the Base Robot
     #
@@ -25,19 +26,18 @@ class Robot( object ):
 
         # Ensure that all features get stopped on exit
         #
-        atexit.register(self.stop_system)
-        print("############ Robot Initialized ##########")
+        atexit.register(self.StopSystem)
+        print("############ Base Robot Initialized ##########")
 
-    # SK = "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"
-    SK = "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"
 
     # Stop all features
     #
-    def stop_system(self):
+    def StopSystem(self):
         # self.motor.disable()
         #
         print("#####  Robot STOPPED ##########")
 
+###################################################################
 
 
 

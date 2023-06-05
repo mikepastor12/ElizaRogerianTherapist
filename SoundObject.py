@@ -1,37 +1,29 @@
 ##########################################################
 #       SoundObject.py
 #
+#       Give our Robots speech capabilities
 #
 #       pip install speechrecognition
 #       pip install pyttsx3
-#
 #           pip install wikipedia
 #           pip install wolframalpha
 #           pip install pyaudio
 
-#     sudo apt install espeak
-#      sudo apt install portaudio19-dev python3-pyaudio
-
-#       speaker-test -c2 -twav -l7
-
-#       Mike Pastor - January 27, 2023
+#       Mike Pastor - June 5, 2023
 
 
 from datetime import datetime
-
 import speech_recognition as sr
-
 import pyttsx3
 
 # import webbrowser
 #  import wikipedia
 #  import wolframalpha
-
 #  import pyaudio
 
 class SoundObject():
 
-    print('####### Pennwick Rover  - Starting up...')
+    print('########### Eliza  SoundObject  Initialized #############')
     #  Speech engine
     #
     engine = pyttsx3.init()
@@ -39,7 +31,6 @@ class SoundObject():
 
     #  0 - male voice 1 = female
     engine.setProperty('voice', voices[1].id )
-
     activationWord = 'computer'
 
 
