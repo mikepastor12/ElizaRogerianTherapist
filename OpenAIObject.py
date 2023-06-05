@@ -29,6 +29,23 @@ class OpenAIObject():
 
         print("############ Eliza OpenAIObject Initialized ##########")
 
+    #####################################################################
+    #  Submit the message list to OpenAI
+    #
+    def submitMessages2(self, messages, model="gpt-3.5-turbo", temperature=0):
+
+        #  print('messages:  ', messages)
+        response = openai.ChatCompletion.create(
+            model=model,
+            messages=messages,
+            temperature=temperature
+            # this is the degree of randomness of the model's output
+        )
+
+        #   print(str(response.choices[0].message))
+        return response.choices[0].message["content"]
+
+
     def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__,
                           sort_keys=True, indent=4)
@@ -46,12 +63,18 @@ class OpenAIObject():
         response = completion.choices[0].text
 
         return response
-
 #
+
+##########################################################
+# #   Quick test
 # ai = OpenAIObject()
-# response = ai.submitMessages( 'hello brave new world')
+#
+# myContext = [ {'role':'system', 'content':""" \
+# hello brave new world. \
+# tell me a story. \
+# """} ]
+#
+# response = ai.submitMessages2( myContext )
 # print( response )
-# ai = OpenAIObject()
-# response = ai.do_completion( 'hello brave new world')
-# print( response )
+
 

@@ -5,20 +5,12 @@
 #
 #       pip install speechrecognition
 #       pip install pyttsx3
-#           pip install wikipedia
-#           pip install wolframalpha
 #           pip install pyaudio
 
 #       Mike Pastor - June 5, 2023
 
-
-from datetime import datetime
 import speech_recognition as sr
 import pyttsx3
-
-# import webbrowser
-#  import wikipedia
-#  import wolframalpha
 #  import pyaudio
 
 class SoundObject():
@@ -33,40 +25,62 @@ class SoundObject():
     engine.setProperty('voice', voices[1].id )
     activationWord = 'computer'
 
-
+    #######################################
+    #   Speak at the set rate
     def speak(self, text, rate=120):
         self.engine.setProperty('rate', rate)
         self.engine.say(text)
         self.engine.runAndWait()
 
-    def parseCommand(self):
+    #####################################
+    #  Print and speak the string
+    def printSpeak(self, str, rate=160):
+        print(str)
+        self.speak(str, rate)
+
+
+    ####################################################################
+    #     Setup the hardware microphone
+    #       and have Google transcribe the input
+    #
+    #     to test speech_recognition Package  on machine
+    #       - Package is also called SpeechRecognition
+    #       python -m speech_recognition
+    #
+    def parseVoiceCommand2(self):
+
         listener = sr.Recognizer()
 
         listener.dynamic_energy_threshold = False
 
-        print('Listening...')
+        print('...')
 
         with sr.Microphone() as source:
 
-            listener.pause_threshold = 2
-            print('How can I help you? ')
-            input_speech = listener.listen(source)
-            # , timeout=10.0
+            listener.pause_threshold = 1
+            listener.adjust_for_ambient_noise(source)
 
             try:
-                print('Recognizing speech...')
+                self.printSpeak('Please tell me more...')
+                input_speech = listener.listen(source, timeout=60.0)
+                # input_speech = listener.listen(source)
+
+                print('Transcribing speech...')
                 query = listener.recognize_google(input_speech, language='en_us')
                 print('Google interprets as - ', query)
+
             except Exception as exception:
-                print('Sorry - didn''t catch that')
-                self.speak('Sorry Michael - didn''t catch that')
-                print(exception)
+                self.printSpeak('Sorry - I didn''t catch that')
+                print('Exception: ', exception)
+                if exception == "KeyboardInterrupt":
+                    exit(-1)
                 return 'None'
 
             return query
 
+
 ########################################################################
-#   main loop
+#   Quick test
 #
 # if __name__ == '__main__':
 #
