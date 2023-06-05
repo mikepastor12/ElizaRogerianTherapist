@@ -21,7 +21,7 @@ class OpenAIObject():
 
 
     #  Which LLM to use
-    model_engine = "gpt-3.5-turbo"
+    modelEngine = "gpt-3.5-turbo"
 
     # Initialize the Open AI object
     #
@@ -32,7 +32,7 @@ class OpenAIObject():
     #####################################################################
     #  Submit the message list to OpenAI
     #
-    def submitMessages2(self, messages, model="gpt-3.5-turbo", temperature=0):
+    def submitMessages2(self, messages, model=modelEngine, temperature=0):
 
         #  print('messages:  ', messages)
         response = openai.ChatCompletion.create(
@@ -53,7 +53,7 @@ class OpenAIObject():
     def doCompletion( self, sentence ):
 
         completion = openai.Completion.create(
-            engine = self.model_engine,
+            engine = self.modelEngine,
             prompt = sentence,
             max_tokens = 1024,
             n = 1,
