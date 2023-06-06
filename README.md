@@ -3,6 +3,9 @@ Eliza - The automated Rogerian Therapist program from the 1960s
 
 The Classic AI Computer program from the 1960s, recreated with the ChatGPT Large Language Model - LLM.
 
+The YouTube video presentation for this program is here:
+https://youtu.be/NS_-2cr78Vc
+
 The code discussed in this video is written in Python and available free from our GitHub site here:
     https://github.com/mikepastor12/ElizaRogerianTherapist
 
