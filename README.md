@@ -32,7 +32,7 @@ Hope the Video and the Code provide a spark for your own ideas and dreams!
 ### You Need a valid OpenAI key in OpenAIObject.py -  See this site
 ####          https://platform.openai.com/account/api-keys
 
-    SoundObject.py - Give our Robots speech capabilities
+### SoundObject.py - Give our Robots speech capabilities
 ####       pip install speechrecognition
 ####       pip install pyttsx3
 ####         pip install pyaudio
