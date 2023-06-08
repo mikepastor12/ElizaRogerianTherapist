@@ -28,6 +28,9 @@ https://youtu.be/NS_-2cr78Vc
 ### You Need a valid OpenAI key in OpenAIObject.py -  See this site at OpenAI - Free for 3 month review
 * https://platform.openai.com/account/api-keys
 
+###  Start the program with ElizaMain.py 
+####   python  ElizaMain.py 
+
 
 ###  Use this command to setup your Python Packages
 #### pip install -r requirements.txt
